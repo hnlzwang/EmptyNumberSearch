@@ -338,3 +338,7 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/EmptyNumberSearch/号段文件.txt
+/EmptyNumberSearch/号码文件.txt
+/EmptyNumberSearch/search.png
+/EmptyNumberSearch/Addr_Data/p1.jpg
