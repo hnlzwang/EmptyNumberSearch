@@ -58,6 +58,8 @@
             this.button21 = new System.Windows.Forms.Button();
             this.button22 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.listBox2 = new System.Windows.Forms.ListBox();
             this.button28 = new System.Windows.Forms.Button();
             this.button27 = new System.Windows.Forms.Button();
             this.button26 = new System.Windows.Forms.Button();
@@ -65,7 +67,6 @@
             this.button24 = new System.Windows.Forms.Button();
             this.button23 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.listView2 = new System.Windows.Forms.ListView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.button34 = new System.Windows.Forms.Button();
             this.button33 = new System.Windows.Forms.Button();
@@ -78,6 +79,7 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -183,6 +185,7 @@
             this.button11.TabIndex = 9;
             this.button11.Text = "复制";
             this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
             // button10
             // 
@@ -201,6 +204,7 @@
             this.button9.TabIndex = 7;
             this.button9.Text = "过滤黑名单";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button8
             // 
@@ -230,6 +234,7 @@
             this.button5.TabIndex = 3;
             this.button5.Text = "导入号段";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button4
             // 
@@ -278,6 +283,7 @@
             this.button15.TabIndex = 3;
             this.button15.Text = "↑";
             this.button15.UseVisualStyleBackColor = true;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
             // button16
             // 
@@ -287,6 +293,7 @@
             this.button16.TabIndex = 4;
             this.button16.Text = "↓";
             this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
             // 
             // label3
             // 
@@ -359,6 +366,7 @@
             this.button21.TabIndex = 12;
             this.button21.Text = "↑";
             this.button21.UseVisualStyleBackColor = true;
+            this.button21.Click += new System.EventHandler(this.button21_Click);
             // 
             // button22
             // 
@@ -368,9 +376,12 @@
             this.button22.TabIndex = 13;
             this.button22.Text = "↓";
             this.button22.UseVisualStyleBackColor = true;
+            this.button22.Click += new System.EventHandler(this.button22_Click);
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.pictureBox2);
+            this.groupBox2.Controls.Add(this.listBox2);
             this.groupBox2.Controls.Add(this.button28);
             this.groupBox2.Controls.Add(this.button27);
             this.groupBox2.Controls.Add(this.button26);
@@ -378,13 +389,30 @@
             this.groupBox2.Controls.Add(this.button24);
             this.groupBox2.Controls.Add(this.button23);
             this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.listView2);
             this.groupBox2.Location = new System.Drawing.Point(12, 350);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(984, 262);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "目标号码";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Location = new System.Drawing.Point(9, 21);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(961, 183);
+            this.pictureBox2.TabIndex = 9;
+            this.pictureBox2.TabStop = false;
+            // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.ItemHeight = 12;
+            this.listBox2.Location = new System.Drawing.Point(9, 20);
+            this.listBox2.MultiColumn = true;
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(961, 184);
+            this.listBox2.TabIndex = 8;
             // 
             // button28
             // 
@@ -394,6 +422,7 @@
             this.button28.TabIndex = 7;
             this.button28.Text = "清空号码";
             this.button28.UseVisualStyleBackColor = true;
+            this.button28.Click += new System.EventHandler(this.button28_Click);
             // 
             // button27
             // 
@@ -403,6 +432,7 @@
             this.button27.TabIndex = 6;
             this.button27.Text = "复制号码";
             this.button27.UseVisualStyleBackColor = true;
+            this.button27.Click += new System.EventHandler(this.button27_Click);
             // 
             // button26
             // 
@@ -412,6 +442,7 @@
             this.button26.TabIndex = 5;
             this.button26.Text = "清除重号";
             this.button26.UseVisualStyleBackColor = true;
+            this.button26.Click += new System.EventHandler(this.button26_Click);
             // 
             // button25
             // 
@@ -421,6 +452,7 @@
             this.button25.TabIndex = 4;
             this.button25.Text = "过滤黑名单";
             this.button25.UseVisualStyleBackColor = true;
+            this.button25.Click += new System.EventHandler(this.button25_Click);
             // 
             // button24
             // 
@@ -430,6 +462,7 @@
             this.button24.TabIndex = 3;
             this.button24.Text = "号码乱序";
             this.button24.UseVisualStyleBackColor = true;
+            this.button24.Click += new System.EventHandler(this.button24_Click);
             // 
             // button23
             // 
@@ -439,6 +472,7 @@
             this.button23.TabIndex = 2;
             this.button23.Text = "号码排序";
             this.button23.UseVisualStyleBackColor = true;
+            this.button23.Click += new System.EventHandler(this.button23_Click);
             // 
             // label6
             // 
@@ -448,15 +482,6 @@
             this.label6.Size = new System.Drawing.Size(89, 12);
             this.label6.TabIndex = 1;
             this.label6.Text = "当前号码个数：";
-            // 
-            // listView2
-            // 
-            this.listView2.HideSelection = false;
-            this.listView2.Location = new System.Drawing.Point(9, 21);
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(961, 182);
-            this.listView2.TabIndex = 0;
-            this.listView2.UseCompatibleStateImageBehavior = false;
             // 
             // groupBox3
             // 
@@ -483,6 +508,7 @@
             this.button34.TabIndex = 7;
             this.button34.Text = "全部导出";
             this.button34.UseVisualStyleBackColor = true;
+            this.button34.Click += new System.EventHandler(this.button34_Click);
             // 
             // button33
             // 
@@ -492,6 +518,7 @@
             this.button33.TabIndex = 6;
             this.button33.Text = "分批导出";
             this.button33.UseVisualStyleBackColor = true;
+            this.button33.Click += new System.EventHandler(this.button33_Click);
             // 
             // button32
             // 
@@ -543,6 +570,7 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
             this.radioButton1.Location = new System.Drawing.Point(6, 42);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(71, 16);
@@ -582,6 +610,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
@@ -626,7 +655,6 @@
         private System.Windows.Forms.Button button24;
         private System.Windows.Forms.Button button23;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ListView listView2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button button34;
         private System.Windows.Forms.Button button33;
@@ -638,6 +666,8 @@
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
 

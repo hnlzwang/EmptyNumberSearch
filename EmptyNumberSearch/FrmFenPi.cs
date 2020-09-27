@@ -11,10 +11,10 @@ using System.Windows.Forms;
 
 namespace EmptyNumberSearch
 {
-    public partial class InputSegment:Form
+    public partial class FrmFenPi:Form
     {
         public event Action<string> ReturnValue;
-        public InputSegment()
+        public FrmFenPi()
         {
             InitializeComponent();
             this.button1.Enabled=false;
@@ -27,7 +27,7 @@ namespace EmptyNumberSearch
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(this.textBox1.Text.Length==7)
+            if(this.textBox1.Text.Length>=1)
             {
                 if(ReturnValue!=null)
                     ReturnValue(this.textBox1.Text);
@@ -38,25 +38,16 @@ namespace EmptyNumberSearch
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             string txt = this.textBox1.Text;
-            string pattern1 = @"^1$";
-            string pattern2= @"^1(3|4|5|6|7|8|9)$";
-            string pattern3= @"^1(3|4|5|6|7|8|9)\d{0,5}$";
-            if(Regex.IsMatch(txt, pattern1)||Regex.IsMatch(txt, pattern2)||Regex.IsMatch(txt, pattern3))
+            string pattern1 = @"^\d+$";
+            if(Regex.IsMatch(txt, pattern1))
             {
                 this.textBox1.Text=txt;
             }
             else
             {
-                if(txt.Length>=1)
-                {
-                    this.textBox1.Text=txt.Substring(0, txt.Length-1);
-                }
-                else
-                {
-                    this.textBox1.Text="";
-                }
+                this.textBox1.Text="";
             }
-            if(this.textBox1.Text.Length==7)
+            if(this.textBox1.Text.Length>=1)
             {
                 this.button1.Enabled=true;
             }
