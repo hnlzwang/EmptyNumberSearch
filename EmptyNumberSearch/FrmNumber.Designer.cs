@@ -236,6 +236,7 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "FrmNumber";
             this.Text = "FrmNumber";
             this.groupBox1.ResumeLayout(false);

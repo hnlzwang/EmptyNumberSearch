@@ -935,5 +935,57 @@ namespace EmptyNumberSearch
             };
             frm.ShowDialog();
         }
+
+        private void button29_Click(object sender, EventArgs e)
+        {
+            FrmExportSegment frm = new FrmExportSegment();
+            frm.ReturnValue+=(value) =>
+            {
+                List<string> tmpList = new List<string>();
+                if(this.radioButton1.Checked==true)
+                {
+                    tmpList=phoneNumbers2;
+                }
+                if(this.radioButton2.Checked==true)
+                {
+                    tmpList=phoneNumbers;
+                }
+                int iValue = Convert.ToInt32(value);
+                var tmpObj = tmpList.Distinct().GroupBy(p => p.Substring(0, iValue)).ToDictionary(p=>p,g=>g.ToList());
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter="txt files (*.txt)|*.txt";
+                if(saveFileDialog.ShowDialog()==DialogResult.OK)
+                {
+                    try
+                    {
+                        new Task(()=> {
+                            string fileName = saveFileDialog.FileName;
+                            string oldName = saveFileDialog.FileName;
+                            foreach(var obj in tmpObj.Keys)
+                            {
+                                fileName=oldName.Replace(".txt", "号段"+obj.Key+"次.txt");
+                                using(FileStream fs = new FileStream(fileName, FileMode.Append, FileAccess.Write))
+                                {
+                                    using(StreamWriter sw = new StreamWriter(fs))
+                                    {
+                                        foreach(var item in tmpObj[obj])
+                                        {
+                                            sw.WriteLine(item);
+                                        }
+                                    }
+                                }
+                            }
+                            MessageBox.Show("导出完成");
+                        }).Start();
+
+                    }
+                    catch(Exception ex)
+                    {
+
+                    }
+                }
+            };
+            frm.ShowDialog();
+        }
     }
 }

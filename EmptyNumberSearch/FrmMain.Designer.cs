@@ -560,6 +560,7 @@
             this.button29.TabIndex = 2;
             this.button29.Text = "按号段导出";
             this.button29.UseVisualStyleBackColor = true;
+            this.button29.Click += new System.EventHandler(this.button29_Click);
             // 
             // radioButton2
             // 

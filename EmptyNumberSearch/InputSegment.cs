@@ -61,5 +61,10 @@ namespace EmptyNumberSearch
                 this.button1.Enabled=true;
             }
         }
+
+        private void InputSegment_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -48,6 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrmExportSegment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmExportSegment.Designer.cs">
+      <DependentUpon>FrmExportSegment.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmFenPi.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +88,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util.cs" />
+    <EmbeddedResource Include="FrmExportSegment.resx">
+      <DependentUpon>FrmExportSegment.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmFenPi.resx">
       <DependentUpon>FrmFenPi.cs</DependentUpon>
     </EmbeddedResource>
