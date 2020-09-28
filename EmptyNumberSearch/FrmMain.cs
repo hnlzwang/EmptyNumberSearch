@@ -18,11 +18,18 @@ namespace EmptyNumberSearch
         List<string> phoneNumbers2 = new List<string>();
         Dictionary<string, string> shengSegment = new Dictionary<string, string>();
         Dictionary<string, string> shiSegment = new Dictionary<string, string>();
+        public static ISP cacheDateList { get; set; }
         public FrmMain()
         {
             InitializeComponent();
             this.pictureBox1.Show();
             Control.CheckForIllegalCrossThreadCalls=false;
+            string ispJson = AppDomain.CurrentDomain.BaseDirectory+"Addr_Data\\ISP.json";
+            if(File.Exists(ispJson))
+            {
+                string fileContent = File.ReadAllText(ispJson);
+                cacheDateList=Newtonsoft.Json.JsonConvert.DeserializeObject<ISP>(fileContent);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -583,13 +590,6 @@ namespace EmptyNumberSearch
                     string fileName = saveFileDialog.FileName;
                     try
                     {
-                        using(FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Write))
-                        {
-                            using(StreamWriter sw = new StreamWriter(fs))
-                            {
-                                
-                            }
-                        }
                         int i = 1;
                         int j = 1;
                         string oldFileName = fileName;
@@ -619,6 +619,321 @@ namespace EmptyNumberSearch
                 }
             };
             frm.ShowDialog(this);
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            //foreach(string item in )
+        }
+
+        private void button30_Click(object sender, EventArgs e)
+        {
+            List<string> tmpList = new List<string>();
+            if(this.radioButton1.Checked==true)
+            {
+                tmpList=phoneNumbers2;
+            }
+            if(this.radioButton2.Checked==true)
+            {
+                tmpList=phoneNumbers;
+            }
+            var tmpObj = tmpList.GroupBy(p => p).ToDictionary(g => g.Key,g => g.Count()+"|"+g.ToList().Count);
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter="txt files (*.txt)|*.txt";
+            if(saveFileDialog.ShowDialog()==DialogResult.OK)
+            {
+                try
+                {
+                    string fileName = saveFileDialog.FileName;
+                    string oldName= saveFileDialog.FileName;
+                    foreach(var obj in tmpObj)
+                    {
+                        fileName=oldName.Replace(".txt", "出现"+obj.Value+"次.txt");
+                        using(FileStream fs = new FileStream(fileName, FileMode.Append, FileAccess.Write))
+                        {
+                            using(StreamWriter sw = new StreamWriter(fs))
+                            {
+                                sw.WriteLine(obj.Key);
+                            }
+                        }
+                    }
+                    MessageBox.Show("导出完成");
+
+                }
+                catch(Exception ex)
+                {
+
+                }
+            }
+        }
+
+        private void FrmMain_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button32_Click(object sender, EventArgs e)
+        {
+            List<string> tmpList = new List<string>();
+            if(this.radioButton1.Checked==true)
+            {
+                tmpList=phoneNumbers2;
+            }
+            if(this.radioButton2.Checked==true)
+            {
+                tmpList=phoneNumbers;
+            }
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter="txt files (*.txt)|*.txt";
+            if(saveFileDialog.ShowDialog()==DialogResult.OK)
+            {
+                try
+                {
+                    Task t1 = new Task(() => {
+                        string fileName = saveFileDialog.FileName;
+                        if(cacheDateList!=null&&cacheDateList.ChinaMobile.Count>0&&cacheDateList.ChinaTelecom.Count>0&&cacheDateList.ChinaUnicom.Count>0)
+                        {
+                            foreach(string item in tmpList)
+                            {
+                                string preNumber1 = item.Substring(0, 2);
+                                string preNumber2 = item.Substring(0, 3);
+                                if(cacheDateList.ChinaMobile.Contains(preNumber1)||cacheDateList.ChinaMobile.Contains(preNumber2))
+                                {
+                                    using(FileStream fs = new FileStream(fileName.Replace(".txt", "_中国移动.txt"), FileMode.Append, FileAccess.Write))
+                                    {
+                                        using(StreamWriter sw = new StreamWriter(fs))
+                                        {
+                                            sw.WriteLine(item);
+                                        }
+                                    }
+                                }
+                                if(cacheDateList.ChinaUnicom.Contains(preNumber1)||cacheDateList.ChinaUnicom.Contains(preNumber2))
+                                {
+                                    using(FileStream fs = new FileStream(fileName.Replace(".txt", "_中国联通.txt"), FileMode.Append, FileAccess.Write))
+                                    {
+                                        using(StreamWriter sw = new StreamWriter(fs))
+                                        {
+                                            sw.WriteLine(item);
+                                        }
+                                    }
+                                }
+                                if(cacheDateList.ChinaTelecom.Contains(preNumber1)||cacheDateList.ChinaTelecom.Contains(preNumber2))
+                                {
+                                    using(FileStream fs = new FileStream(fileName.Replace(".txt", "_中国电信.txt"), FileMode.Append, FileAccess.Write))
+                                    {
+                                        using(StreamWriter sw = new StreamWriter(fs))
+                                        {
+                                            sw.WriteLine(item);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            using(FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Write))
+                            {
+                                using(StreamWriter sw = new StreamWriter(fs))
+                                {
+                                    foreach(string item in tmpList)
+                                    {
+                                        sw.WriteLine(item);
+                                    }
+                                }
+                            }
+                        }
+                        MessageBox.Show("导出完成");
+                    });
+                    t1.Start();
+
+                }
+                catch(Exception ex)
+                {
+
+                }
+            }
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            FrmISP frm = new FrmISP();
+            frm.ReturnValue+=(value) =>
+            {
+                new Task(()=> {
+                    string preNumber1 = string.Empty;
+                    string preNumber2 = string.Empty;
+                    phoneNumbers=phoneNumbers.Distinct().OrderBy(g => g).ToList();
+                    phoneNumbers2.Clear();
+                    switch(value)
+                    {
+                        case "1":
+                            foreach(string item in phoneNumbers)
+                            {
+                                preNumber1=item.Substring(0, 3);
+                                preNumber2=item.Substring(0, 4);
+                                if(cacheDateList.ChinaMobile.Contains(preNumber1)||cacheDateList.ChinaMobile.Contains(preNumber2))
+                                {
+                                    phoneNumbers2.Add(item);
+                                }
+                            }
+                            break;
+                        case "2":
+                            foreach(string item in phoneNumbers)
+                            {
+                                preNumber1=item.Substring(0, 3);
+                                preNumber2=item.Substring(0, 4);
+                                if(cacheDateList.ChinaUnicom.Contains(preNumber1)||cacheDateList.ChinaUnicom.Contains(preNumber2))
+                                {
+                                    phoneNumbers2.Add(item);
+                                }
+                            }
+                            break;
+                        case "3":
+                            foreach(string item in phoneNumbers)
+                            {
+                                preNumber1=item.Substring(0, 3);
+                                preNumber2=item.Substring(0, 4);
+                                if(cacheDateList.ChinaTelecom.Contains(preNumber1)||cacheDateList.ChinaTelecom.Contains(preNumber2))
+                                {
+                                    phoneNumbers2.Add(item);
+                                }
+                            }
+                            break;
+                        default:
+                            preNumber1=value.Substring(0, 11);
+                            preNumber2=value.Substring(11);
+                            foreach(string item in phoneNumbers)
+                            {
+                                if(item.CompareTo(preNumber1)>0&&item.CompareTo(preNumber2)<0)
+                                {
+                                    phoneNumbers2.Add(item);
+                                }
+                            }
+                            break;
+                    }
+                    this.listBox2.Items.Clear();
+                    foreach(string item in phoneNumbers2)
+                    {
+                        if(phoneNumbers.Contains(item))
+                        {
+                            phoneNumbers.Remove(item);
+                            this.listBox1.Items.Remove(item);
+                            this.listBox2.Items.Add(item);
+                        }
+                    }
+                    if(phoneNumbers.Count>0)
+                    {
+                        this.label1.Text="当前号码个数："+phoneNumbers.Count;
+                        this.pictureBox1.Hide();
+                    }
+                    else
+                    {
+                        this.pictureBox1.Show();
+                    }
+                    this.label6.Text="当前号码个数："+phoneNumbers2.Count;
+                    if(phoneNumbers2.Count>0)
+                    {
+                        this.pictureBox2.Hide();
+                    }
+                    else
+                    {
+                        this.pictureBox2.Show();
+                    }
+                }).Start();
+                
+            };
+            frm.ShowDialog();
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            FrmISP frm = new FrmISP();
+            frm.ReturnValue+=(value) =>
+            {
+                new Task(() => {
+                    string preNumber1 = string.Empty;
+                    string preNumber2 = string.Empty;
+                    phoneNumbers2=phoneNumbers2.Distinct().OrderBy(g => g).ToList();
+                    phoneNumbers.Clear();
+                    switch(value)
+                    {
+                        case "1":
+                            foreach(string item in phoneNumbers2)
+                            {
+                                preNumber1=item.Substring(0, 3);
+                                preNumber2=item.Substring(0, 4);
+                                if(cacheDateList.ChinaMobile.Contains(preNumber1)||cacheDateList.ChinaMobile.Contains(preNumber2))
+                                {
+                                    phoneNumbers.Add(item);
+                                }
+                            }
+                            break;
+                        case "2":
+                            foreach(string item in phoneNumbers2)
+                            {
+                                preNumber1=item.Substring(0, 3);
+                                preNumber2=item.Substring(0, 4);
+                                if(cacheDateList.ChinaUnicom.Contains(preNumber1)||cacheDateList.ChinaUnicom.Contains(preNumber2))
+                                {
+                                    phoneNumbers.Add(item);
+                                }
+                            }
+                            break;
+                        case "3":
+                            foreach(string item in phoneNumbers2)
+                            {
+                                preNumber1=item.Substring(0, 3);
+                                preNumber2=item.Substring(0, 4);
+                                if(cacheDateList.ChinaTelecom.Contains(preNumber1)||cacheDateList.ChinaTelecom.Contains(preNumber2))
+                                {
+                                    phoneNumbers.Add(item);
+                                }
+                            }
+                            break;
+                        default:
+                            preNumber1=value.Substring(0, 11);
+                            preNumber2=value.Substring(11);
+                            foreach(string item in phoneNumbers2)
+                            {
+                                if(item.CompareTo(preNumber1)>0&&item.CompareTo(preNumber2)<0)
+                                {
+                                    phoneNumbers.Add(item);
+                                }
+                            }
+                            break;
+                    }
+                    this.listBox1.Items.Clear();
+                    foreach(string item in phoneNumbers)
+                    {
+                        if(phoneNumbers2.Contains(item))
+                        {
+                            phoneNumbers2.Remove(item);
+                            this.listBox2.Items.Remove(item);
+                            this.listBox1.Items.Add(item);
+                        }
+                    }
+                    if(phoneNumbers.Count>0)
+                    {
+                        this.label1.Text="当前号码个数："+phoneNumbers.Count;
+                        this.pictureBox1.Hide();
+                    }
+                    else
+                    {
+                        this.pictureBox1.Show();
+                    }
+                    this.label6.Text="当前号码个数："+phoneNumbers2.Count;
+                    if(phoneNumbers2.Count>0)
+                    {
+                        this.pictureBox2.Hide();
+                    }
+                    else
+                    {
+                        this.pictureBox2.Show();
+                    }
+                }).Start();
+
+            };
+            frm.ShowDialog();
         }
     }
 }

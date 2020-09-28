@@ -195,6 +195,7 @@
             this.button10.TabIndex = 8;
             this.button10.Text = "清除非手机号";
             this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // button9
             // 
@@ -348,6 +349,7 @@
             this.button19.TabIndex = 10;
             this.button19.Text = "↑";
             this.button19.UseVisualStyleBackColor = true;
+            this.button19.Click += new System.EventHandler(this.button19_Click);
             // 
             // button20
             // 
@@ -357,6 +359,7 @@
             this.button20.TabIndex = 11;
             this.button20.Text = "↓";
             this.button20.UseVisualStyleBackColor = true;
+            this.button20.Click += new System.EventHandler(this.button20_Click);
             // 
             // button21
             // 
@@ -528,6 +531,7 @@
             this.button32.TabIndex = 5;
             this.button32.Text = "按运营商导出";
             this.button32.UseVisualStyleBackColor = true;
+            this.button32.Click += new System.EventHandler(this.button32_Click);
             // 
             // button31
             // 
@@ -546,6 +550,7 @@
             this.button30.TabIndex = 3;
             this.button30.Text = "按重复次数导出";
             this.button30.UseVisualStyleBackColor = true;
+            this.button30.Click += new System.EventHandler(this.button30_Click);
             // 
             // button29
             // 
@@ -605,6 +610,7 @@
             this.MaximizeBox = false;
             this.Name = "FrmMain";
             this.Text = "空号搜索";
+            this.Load += new System.EventHandler(this.FrmMain_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

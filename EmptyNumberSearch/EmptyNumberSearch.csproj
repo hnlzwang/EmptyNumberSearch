@@ -54,6 +54,12 @@
     <Compile Include="FrmFenPi.Designer.cs">
       <DependentUpon>FrmFenPi.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmISP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmISP.Designer.cs">
+      <DependentUpon>FrmISP.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,11 +78,15 @@
     <Compile Include="InputSegment.Designer.cs">
       <DependentUpon>InputSegment.cs</DependentUpon>
     </Compile>
+    <Compile Include="ISP.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util.cs" />
     <EmbeddedResource Include="FrmFenPi.resx">
       <DependentUpon>FrmFenPi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmISP.resx">
+      <DependentUpon>FrmISP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
@@ -97,6 +107,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Addr_Data\ISP.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
