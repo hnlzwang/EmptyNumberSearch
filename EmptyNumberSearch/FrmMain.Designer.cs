@@ -76,11 +76,14 @@
             this.button29 = new System.Windows.Forms.Button();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.groupBox3.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -156,6 +159,7 @@
             this.button14.TabIndex = 12;
             this.button14.Text = "文件处理";
             this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
             // button13
             // 
@@ -313,6 +317,7 @@
             this.button17.TabIndex = 6;
             this.button17.Text = "↑";
             this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
             // 
             // button18
             // 
@@ -322,6 +327,7 @@
             this.button18.TabIndex = 7;
             this.button18.Text = "↓";
             this.button18.UseVisualStyleBackColor = true;
+            this.button18.Click += new System.EventHandler(this.button18_Click);
             // 
             // label4
             // 
@@ -498,14 +504,14 @@
             this.groupBox3.Controls.Add(this.radioButton1);
             this.groupBox3.Location = new System.Drawing.Point(12, 628);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(984, 89);
+            this.groupBox3.Size = new System.Drawing.Size(984, 61);
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "号码导出";
             // 
             // button34
             // 
-            this.button34.Location = new System.Drawing.Point(895, 35);
+            this.button34.Location = new System.Drawing.Point(895, 20);
             this.button34.Name = "button34";
             this.button34.Size = new System.Drawing.Size(75, 23);
             this.button34.TabIndex = 7;
@@ -515,7 +521,7 @@
             // 
             // button33
             // 
-            this.button33.Location = new System.Drawing.Point(814, 35);
+            this.button33.Location = new System.Drawing.Point(814, 20);
             this.button33.Name = "button33";
             this.button33.Size = new System.Drawing.Size(75, 23);
             this.button33.TabIndex = 6;
@@ -525,7 +531,7 @@
             // 
             // button32
             // 
-            this.button32.Location = new System.Drawing.Point(719, 35);
+            this.button32.Location = new System.Drawing.Point(719, 20);
             this.button32.Name = "button32";
             this.button32.Size = new System.Drawing.Size(89, 23);
             this.button32.TabIndex = 5;
@@ -535,16 +541,17 @@
             // 
             // button31
             // 
-            this.button31.Location = new System.Drawing.Point(638, 35);
+            this.button31.Location = new System.Drawing.Point(638, 20);
             this.button31.Name = "button31";
             this.button31.Size = new System.Drawing.Size(75, 23);
             this.button31.TabIndex = 4;
             this.button31.Text = "按地区导出";
             this.button31.UseVisualStyleBackColor = true;
+            this.button31.Click += new System.EventHandler(this.button31_Click);
             // 
             // button30
             // 
-            this.button30.Location = new System.Drawing.Point(538, 35);
+            this.button30.Location = new System.Drawing.Point(538, 20);
             this.button30.Name = "button30";
             this.button30.Size = new System.Drawing.Size(94, 23);
             this.button30.TabIndex = 3;
@@ -554,7 +561,7 @@
             // 
             // button29
             // 
-            this.button29.Location = new System.Drawing.Point(457, 35);
+            this.button29.Location = new System.Drawing.Point(457, 20);
             this.button29.Name = "button29";
             this.button29.Size = new System.Drawing.Size(75, 23);
             this.button29.TabIndex = 2;
@@ -565,7 +572,7 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(99, 42);
+            this.radioButton2.Location = new System.Drawing.Point(93, 23);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(71, 16);
             this.radioButton2.TabIndex = 1;
@@ -577,7 +584,7 @@
             // 
             this.radioButton1.AutoSize = true;
             this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(6, 42);
+            this.radioButton1.Location = new System.Drawing.Point(6, 23);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(71, 16);
             this.radioButton1.TabIndex = 0;
@@ -585,12 +592,31 @@
             this.radioButton1.Text = "目标号码";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.statusStrip1.Location = new System.Drawing.Point(0, 707);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1008, 22);
+            this.statusStrip1.TabIndex = 16;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(131, 17);
+            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Click += new System.EventHandler(this.toolStripStatusLabel1_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1008, 729);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.button22);
@@ -620,6 +646,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -675,6 +703,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 

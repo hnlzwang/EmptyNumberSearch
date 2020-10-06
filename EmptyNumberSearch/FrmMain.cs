@@ -30,6 +30,9 @@ namespace EmptyNumberSearch
                 string fileContent = File.ReadAllText(ispJson);
                 cacheDateList=Newtonsoft.Json.JsonConvert.DeserializeObject<ISP>(fileContent);
             }
+            this.toolStripStatusLabel1.Alignment=ToolStripItemAlignment.Right;
+            this.toolStripStatusLabel1.Text="主程序版本：1.0.0.0";
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -963,7 +966,7 @@ namespace EmptyNumberSearch
                             string oldName = saveFileDialog.FileName;
                             foreach(var obj in tmpObj.Keys)
                             {
-                                fileName=oldName.Replace(".txt", "号段"+obj.Key+"次.txt");
+                                fileName=oldName.Replace(".txt", "号段"+obj.Key+".txt");
                                 using(FileStream fs = new FileStream(fileName, FileMode.Append, FileAccess.Write))
                                 {
                                     using(StreamWriter sw = new StreamWriter(fs))
@@ -985,6 +988,199 @@ namespace EmptyNumberSearch
                     }
                 }
             };
+            frm.ShowDialog();
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            FrmCompose frm = new FrmCompose();
+            frm.ReturnValue+=(value) =>
+            {
+                if(value.Count>0)
+                {
+                    phoneNumbers2.Clear();
+                    new Task(() => {
+                        foreach(var item in phoneNumbers)
+                        {
+                            foreach(var p in value)
+                                if(Regex.IsMatch(item, p))
+                                {
+                                    phoneNumbers2.Add(item);
+                                }
+                        }
+                        this.listBox2.Items.Clear();
+                        foreach(string item in phoneNumbers2)
+                        {
+                            if(phoneNumbers.Contains(item))
+                            {
+                                phoneNumbers.Remove(item);
+                                this.listBox1.Items.Remove(item);
+                                this.listBox2.Items.Add(item);
+                            }
+                        }
+                        if(phoneNumbers.Count>0)
+                        {
+                            this.label1.Text="当前号码个数："+phoneNumbers.Count;
+                            this.pictureBox1.Hide();
+                        }
+                        else
+                        {
+                            this.pictureBox1.Show();
+                        }
+                        this.label6.Text="当前号码个数："+phoneNumbers2.Count;
+                        if(phoneNumbers2.Count>0)
+                        {
+                            this.pictureBox2.Hide();
+                        }
+                        else
+                        {
+                            this.pictureBox2.Show();
+                        }
+                    }).Start();
+                    
+                }
+            };
+            frm.ShowDialog();
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            FrmCompose frm = new FrmCompose();
+            frm.ReturnValue+=(value) =>
+            {
+                if(value.Count>0)
+                {
+                    phoneNumbers.Clear();
+                    new Task(() => {
+                        foreach(var item in phoneNumbers2)
+                        {
+                            foreach(var p in value)
+                                if(Regex.IsMatch(item, p))
+                                {
+                                    phoneNumbers.Add(item);
+                                }
+                        }
+                        this.listBox1.Items.Clear();
+                        foreach(string item in phoneNumbers)
+                        {
+                            if(phoneNumbers2.Contains(item))
+                            {
+                                phoneNumbers2.Remove(item);
+                                this.listBox2.Items.Remove(item);
+                                this.listBox1.Items.Add(item);
+                            }
+                        }
+                        if(phoneNumbers.Count>0)
+                        {
+                            this.label1.Text="当前号码个数："+phoneNumbers.Count;
+                            this.pictureBox1.Hide();
+                        }
+                        else
+                        {
+                            this.pictureBox1.Show();
+                        }
+                        this.label6.Text="当前号码个数："+phoneNumbers2.Count;
+                        if(phoneNumbers2.Count>0)
+                        {
+                            this.pictureBox2.Hide();
+                        }
+                        else
+                        {
+                            this.pictureBox2.Show();
+                        }
+                    }).Start();
+
+                }
+            };
+            frm.ShowDialog();
+        }
+
+        private void button31_Click(object sender, EventArgs e)
+        {
+            FrmArea frm = new FrmArea();
+            frm.ReturnValue+=(value) =>
+            {
+                List<string> tmpList = new List<string>();
+                if(this.radioButton1.Checked==true)
+                {
+                    tmpList=phoneNumbers2;
+                }
+                if(this.radioButton2.Checked==true)
+                {
+                    tmpList=phoneNumbers;
+                }
+                List<string> areas = new List<string>();
+                string filePath = AppDomain.CurrentDomain.BaseDirectory+"Addr_Data\\";
+                string fileName = "";
+                if(value==1)
+                {
+                    fileName=filePath+"area_sheng.txt";
+                }
+                if(value==2)
+                {
+                    fileName=filePath+"area_shi.txt";
+                }
+                if(File.Exists(fileName))
+                {
+                    using(FileStream fs=new FileStream(fileName, FileMode.Open, FileAccess.Read))
+                    {
+                        using(StreamReader sr=new StreamReader(fs))
+                        {
+                            while(!sr.EndOfStream)
+                            {
+                                areas.Add(sr.ReadLine().ToString());
+                            }
+                        }
+                    }
+                }
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter="txt files (*.txt)|*.txt";
+                if(saveFileDialog.ShowDialog()==DialogResult.OK)
+                {
+                    string saveFileName = saveFileDialog.FileName;
+                    try
+                    {
+                        new Task(() => {
+                            foreach(var obj in tmpList)
+                            {
+                                string strPre = obj.Substring(0, 7);
+                                foreach(var item in areas)
+                                {
+                                    if(item.IndexOf(strPre)>=0)
+                                    {
+                                        string tmpArea = item.Split('_')[0];
+                                        string newName = saveFileName.Replace(".txt", tmpArea+".txt");
+                                        using(FileStream fs=new FileStream(newName, FileMode.Append, FileAccess.Write))
+                                        {
+                                            using(StreamWriter sw=new StreamWriter(fs))
+                                            {
+                                                sw.WriteLine(obj);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            MessageBox.Show("导出完成");
+                        }).Start();
+
+                    }
+                    catch(Exception ex)
+                    {
+
+                    }
+                }
+            };
+            frm.ShowDialog();
+        }
+
+        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            FrmFileTool frm = new FrmFileTool();
             frm.ShowDialog();
         }
     }
