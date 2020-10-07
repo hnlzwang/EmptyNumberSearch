@@ -486,7 +486,27 @@ namespace EmptyNumberSearch
 
         private void button5_Click(object sender, EventArgs e)
         {
-
+            FrmImportSegment frm = new FrmImportSegment();
+            frm.ReturnValue+=(value)=>{
+                //MessageBox.Show(value.Count.ToString());
+                phoneNumbers.Clear();
+                string pattern = @"^1(3|4|5|6|7|8|9)\d{5}$";
+                foreach(var obj in value)
+                {
+                    if(Regex.IsMatch(obj, pattern))
+                    {
+                        for(int i = 0; i<=9999; i++)
+                        {
+                            string pn = obj+i.ToString("0000");
+                            phoneNumbers.Add(pn);
+                            this.listBox1.Items.Add(pn);
+                        }
+                    }
+                }
+                this.label1.Text="当前号码个数："+phoneNumbers.Count;
+                this.pictureBox1.Hide();
+            };
+            frm.ShowDialog();
         }
 
         private void button25_Click(object sender, EventArgs e)

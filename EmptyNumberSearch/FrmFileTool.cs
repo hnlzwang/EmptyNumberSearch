@@ -24,7 +24,12 @@ namespace EmptyNumberSearch
 
         private void FrmFileTool_Load(object sender, EventArgs e)
         {
-
+            string tmp = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            if(!tmp.EndsWith("\\"))
+            {
+                tmp+="\\";
+            }
+            this.textBox3.Text=tmp;
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -89,23 +94,23 @@ namespace EmptyNumberSearch
             new Task(() =>
             {
                 //List<Task> tasks = new List<Task>();
-                using(FileStream fs = new FileStream(this.textBox1.Text, FileMode.OpenOrCreate, FileAccess.Read))
+                using(FileStream fs12 = new FileStream(this.textBox1.Text, FileMode.OpenOrCreate, FileAccess.Read))
                 {
-                    using(StreamReader sr = new StreamReader(fs))
+                    using(StreamReader sr12 = new StreamReader(fs12))
                     {
-                        while(!sr.EndOfStream)
+                        while(!sr12.EndOfStream)
                         {
-                            masters.Add(sr.ReadLine());
+                            masters.Add(sr12.ReadLine());
                         }
                     }
                 }
-                using(FileStream fs = new FileStream(this.textBox2.Text, FileMode.OpenOrCreate, FileAccess.Read))
+                using(FileStream fs13 = new FileStream(this.textBox2.Text, FileMode.OpenOrCreate, FileAccess.Read))
                 {
-                    using(StreamReader sr = new StreamReader(fs))
+                    using(StreamReader sr13 = new StreamReader(fs13))
                     {
-                        while(!sr.EndOfStream)
+                        while(!sr13.EndOfStream)
                         {
-                            supports.Add(sr.ReadLine());
+                            supports.Add(sr13.ReadLine());
                         }
                     }
                 }
@@ -126,45 +131,43 @@ namespace EmptyNumberSearch
                 }
                 string fileName1 = this.textBox1.Text;
                 string fileName2 = this.textBox2.Text;
-                fileName1=fileName1.Substring(fileName1.LastIndexOf("\\")).Replace("\\","").Replace(".txt", "");
+                fileName1=fileName1.Substring(fileName1.LastIndexOf("\\")).Replace("\\", "").Replace(".txt", "");
                 fileName2=fileName2.Substring(fileName2.LastIndexOf("\\")).Replace("\\", "").Replace(".txt", "");
-                string newFileName1 = this.textBox3.Text+ fileName1+"_"+fileName2+"_2交集.txt";
-                string newFileName2 = this.textBox3.Text+ fileName1+"_"+fileName2+"去除交集.txt";
-               // Task t1=new Task(() =>
-                //{
-                    using(FileStream fs = new FileStream(newFileName1, FileMode.OpenOrCreate, FileAccess.ReadWrite))
-                    {
-                        using(StreamWriter sw = new StreamWriter(fs))
-                        {
-                            foreach(var item in intersections)
-                            {
-                                sw.WriteLine(item);
-                            }
-                        }
-                    }
-                //});
-               // Task t2=new Task(() =>
-                //{
-                    using(FileStream fs = new FileStream(newFileName2, FileMode.OpenOrCreate, FileAccess.ReadWrite))
-                    {
-                        using(StreamWriter sw = new StreamWriter(fs))
-                        {
-                            foreach(var item in masters)
-                            {
-                                sw.WriteLine(item);
-                            }
-                            foreach(var item in supports)
-                            {
-                                sw.WriteLine(item);
-                            }
-                        }
-                    }
-                //});
-                //t1.Start();
-                //t2.Start();
-                //tasks.Add(t1);
-                //tasks.Add(t2);
-                //Task.WhenAll(tasks);
+                string newFileName1 = this.textBox3.Text+fileName1+"_"+fileName2+"_2交集.txt";
+                string newFileName2 = this.textBox3.Text+fileName1+"_"+fileName2+"去除交集.txt";
+                Task t1 = new Task(() =>
+                  {
+                      using(FileStream fs14 = new FileStream(newFileName1, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                      {
+                          using(StreamWriter sw14 = new StreamWriter(fs14))
+                          {
+                              foreach(var item in intersections)
+                              {
+                                  sw14.WriteLine(item);
+                              }
+                          }
+                      }
+                  });
+                Task t2 = new Task(() =>
+                  {
+                      using(FileStream fs15 = new FileStream(newFileName2, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                      {
+                          using(StreamWriter sw15 = new StreamWriter(fs15))
+                          {
+                              foreach(var item in masters)
+                              {
+                                  sw15.WriteLine(item);
+                              }
+                              foreach(var item in supports)
+                              {
+                                  sw15.WriteLine(item);
+                              }
+                          }
+                      }
+                  });
+                t1.Start();
+                t2.Start();
+                Task.WaitAll(new Task[] { t1, t2 });
                 MessageBox.Show("导出完成.");
             }).Start();
         }
@@ -192,23 +195,23 @@ namespace EmptyNumberSearch
             new Task(() =>
             {
                 //List<Task> tasks = new List<Task>();
-                using(FileStream fs = new FileStream(this.textBox1.Text, FileMode.OpenOrCreate, FileAccess.Read))
+                using(FileStream fs11 = new FileStream(this.textBox1.Text, FileMode.OpenOrCreate, FileAccess.Read))
                 {
-                    using(StreamReader sr = new StreamReader(fs))
+                    using(StreamReader sr11 = new StreamReader(fs11))
                     {
-                        while(!sr.EndOfStream)
+                        while(!sr11.EndOfStream)
                         {
-                            masters.Add(sr.ReadLine());
+                            masters.Add(sr11.ReadLine());
                         }
                     }
                 }
-                using(FileStream fs = new FileStream(this.textBox2.Text, FileMode.OpenOrCreate, FileAccess.Read))
+                using(FileStream fs22 = new FileStream(this.textBox2.Text, FileMode.OpenOrCreate, FileAccess.Read))
                 {
-                    using(StreamReader sr = new StreamReader(fs))
+                    using(StreamReader sr22 = new StreamReader(fs22))
                     {
-                        while(!sr.EndOfStream)
+                        while(!sr22.EndOfStream)
                         {
-                            supports.Add(sr.ReadLine());
+                            supports.Add(sr22.ReadLine());
                         }
                     }
                 }
@@ -231,56 +234,60 @@ namespace EmptyNumberSearch
                 string fileName2 = this.textBox2.Text;
                 fileName1=fileName1.Substring(fileName1.LastIndexOf("\\")).Replace("\\", "").Replace(".txt", "");
                 fileName2=fileName2.Substring(fileName2.LastIndexOf("\\")).Replace("\\", "").Replace(".txt", "");
-                string newFileName1 =this.textBox3+fileName1+"_"+fileName2+"_3交集.txt";
-                string newFileName2 = this.textBox3+fileName2+"去除交集.txt";
-                string newFileName3 = this.textBox3+fileName1+"去除交集.txt";
-                //Task t3=new Task(() =>
-                //{
-                    using(FileStream fs = new FileStream(newFileName3, FileMode.OpenOrCreate, FileAccess.ReadWrite))
-                    {
-                        using(StreamWriter sw = new StreamWriter(fs))
-                        {
-                            foreach(var item in masters)
-                            {
-                                sw.WriteLine(item);
-                            }
-                        }
-                    }
-                // });
-                //Task t2= new Task(() =>
-                //{
-                using(FileStream fs = new FileStream(newFileName2, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                string newFileName1 = this.textBox3.Text+fileName1+"_"+fileName2+"_3交集.txt";
+                string newFileName2 = this.textBox3.Text+fileName2+"去除交集.txt";
+                string newFileName3 = this.textBox3.Text+fileName1+"去除交集.txt";
+                try
                 {
-                    using(StreamWriter sw = new StreamWriter(fs))
-                    {
-                        foreach(var item in supports)
-                        {
-                            sw.WriteLine(item);
-                        }
-                    }
+                    Task t1 = new Task(() =>
+                      {
+                          using(FileStream fs1 = new FileStream(newFileName3, FileMode.Create, FileAccess.Write))
+                          {
+                              using(StreamWriter sw1 = new StreamWriter(fs1))
+                              {
+                                  foreach(var item in masters)
+                                  {
+                                      sw1.WriteLine(item);
+                                  }
+                              }
+                          }
+                        });
+                    Task t2 = new Task(() =>
+                      {
+                          using(FileStream fs2 = new FileStream(newFileName2, FileMode.Create, FileAccess.Write))
+                          {
+                              using(StreamWriter sw2 = new StreamWriter(fs2))
+                              {
+                                  foreach(var item in supports)
+                                  {
+                                      sw2.WriteLine(item);
+                                  }
+                              }
+                          }
+                      });
+                    Task t3 = new Task(() =>
+                      {
+                          using(FileStream fs3 = new FileStream(newFileName1, FileMode.Create, FileAccess.Write))
+                          {
+                              using(StreamWriter sw3 = new StreamWriter(fs3))
+                              {
+                                  foreach(var item in intersections)
+                                  {
+                                      sw3.WriteLine(item);
+                                  }
+                              }
+                          }
+                      });
+                    t1.Start();
+                    t2.Start();
+                    t3.Start();
+                    Task.WaitAll(new Task[] { t1, t2, t3 });
+                    MessageBox.Show("导出完成.");
                 }
-                // });
-                //Task t1=new Task(() =>
-                //{
-                using(FileStream fs = new FileStream(newFileName1, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                catch(Exception ex)
                 {
-                    using(StreamWriter sw = new StreamWriter(fs))
-                    {
-                        foreach(var item in intersections)
-                        {
-                            sw.WriteLine(item);
-                        }
-                    }
+                    MessageBox.Show(ex.Message);
                 }
-                //});
-                //t1.Start();
-                //t2.Start();
-                //t3.Start();
-                //tasks.Add(t1);
-                //tasks.Add(t2);
-                //tasks.Add(t3);
-                //Task.WhenAll(tasks);
-                MessageBox.Show("导出完成.");
             }).Start();
         }
     }
